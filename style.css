@@ -199,7 +199,7 @@ body {
 
     .task {
         overflow: unset;
-        width: inherit;
+        width: 93vw;
     }
 
     .grid-container {
