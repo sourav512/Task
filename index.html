@@ -1,49 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="./style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap"
+        rel="stylesheet">
     <script src="https://kit.fontawesome.com/8c59268d94.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="grid-container">
+
+<body onresize="toggleSidePanel()">
+    <!-- <div class="add-task-modal" id="modal"> -->
+    <div class="modal-box" id="modal">
+        <p class="modal-heading">Add Task </p>
+        <i class="fa-solid fa-circle-xmark modal-close-btn" id="modalCloseBtn" onclick="closeModal()"></i>
+        <form action="" class="modal-form" id="modalForm">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title">
+            <label for="description">Task Description</label>
+            <textarea name="description" id="description" cols="30" rows="5"></textarea>
+            <div class="modal-btn">
+                <button type="button" class="btn" onclick="addNewTask()" id="addTask">Add</button>
+                <button type="button" class="btn" onclick="resetField()">Reset</button>
+            </div>
+        </form>
+    </div>
+    <!-- </div> -->
+    <div class="grid-container" id="mainLayout">
         <div class="navbar">
-                <div class="navbar-heading"><p>Practice Application</p></div>
+            <div class="navbar-heading">
+                <p>Practice Application</p>
+            </div>
+            <div class="navbar-icon">
+                <div class="addTaskBtn" onclick="showModal('new',0)"><i class="fa-solid fa-plus"></i> Task</div>
                 <div class="profile-image">A</div>
+            </div>
         </div>
         <div class="sidepanel">
             <div class="side-panel-icon">
-                <a href="#"><i class="fa-solid fa-house-chimney"></i></a>
-                <a href="#"><i class="fa-solid fa-gear"></i></a>
-                <a href="#"><i class="fa-solid fa-circle-question"></i></a>
+                <a href="#"><i class="fa-solid fa-house-chimney "></i><span class="icon-label">Home</span></a>
+                <a href="#"><i class="fa-solid fa-gear"></i><span class="icon-label">Setting</span></a>
+                <a href="#" onclick="changeSidePanel(true)" id="expandBtn"><i class="fa-solid fa-angles-right"></i><span class="icon-label">Shrink</span></a>
+                <a href="#"><i class="fa-solid fa-circle-question"></i><span class="icon-label">Help</span></a>
+                
             </div>
         </div>
         <div class="main">
             <p class="heading">Hello, Administrator</p>
-                <div class="main-body">
-                    <p>Welcome to your dashboard. You can view your tasks on the right.</p>
-                    <p>Have a plesant day!</p>
+            <div class="main-body">
+                <p>Welcome to your dashboard. You can view your tasks on the right.</p>
+                <p>Have a plesant day!</p>
+            </div>
+            <div class="date">
+                <p>Today is</p>
+                <p id="dashboardDate"></p>
+            </div>
+            <div class="weather">
+                <div class="temp">
+                    <p>28&deg;C</p>
+                    <p>Rainy</p>
                 </div>
-                <div class="date">
-                    <p>Today is</p>
-                    <p>27th Aug 2022</p>
+                <div class="weather-icon">
+                    <i class="fa-solid fa-cloud-showers-heavy"></i>
                 </div>
-                <div class="weather">
-                    <div class="temp">
-                        <p>28&deg;C</p>
-                        <p>Rainy</p>
-                    </div>
-                    <div class="weather-icon">
-                        <i class="fa-solid fa-cloud-showers-heavy"></i>
-                    </div>
-                </div>
+            </div>
         </div>
-        <div class="task">
-            <div class="task-card">
+        <div class="task" id="task">
+            <!-- <div class="task-card">
                 <p class="task-heading">Prepare documentation</p>
                 <p class="task-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus sed nisi repellendus iusto natus odit? Voluptatem nulla ipsam doloribus. Et amet eum debitis ea mollitia consectetur eligendi reprehenderit quas nobis.</p>
                 <p class="task-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus sed nisi repellendus iusto natus odit? Voluptatem nulla ipsam doloribus. Et amet eum debitis ea mollitia consectetur eligendi reprehenderit quas nobis.</p>
@@ -108,11 +134,13 @@
                     <a href="#"><i class="fa-solid fa-xmark"></i> Remove</a>
                     <a href="#"><i class="fa-solid fa-check"></i> Complete</a>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="footer">
             <p>&#169;Copyright 2022. All rights reserved.</p>
         </div>
     </div>
+    <script src="./script.js"></script>
 </body>
+
 </html>
