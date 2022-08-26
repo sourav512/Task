@@ -1,6 +1,18 @@
 const date = new Date;
 document.getElementById('dashboardDate').innerText = `${date.toUTCString().substring(5, 16)}`
 showTask();
+checkCompletedTask();
+function checkCompletedTask (){
+    let completedTaskList = JSON.parse(localStorage.getItem('completedTaskList'));
+    if (!completedTaskList.length) {
+        console.log('this ran');
+        document.getElementById('showCompleteTaskModal').style.opacity = '50%';
+        document.getElementById('showCompleteTaskModal').setAttribute('onclick','');
+    }else{
+        document.getElementById('showCompleteTaskModal').style.opacity = '';
+        document.getElementById('showCompleteTaskModal').setAttribute('onclick','showModal(\'complete\')');
+    }
+}
 const addNewTask = () => {
     let allTask;
     let html = "";
@@ -31,6 +43,7 @@ const closeModal = () => {
 
 const closeCompleteModal = () => {
     document.getElementById("completeTaskModal").style.display = 'none';
+    checkCompletedTask();
 }
 
 const showModal = (type, index) => {
@@ -137,6 +150,7 @@ const completeTask = (index) => {
         localStorage.setItem('completedTaskList', JSON.stringify(completedTaskList));
         localStorage.setItem('taskList', JSON.stringify(allTask));
         showTask();
+        checkCompletedTask();
     }
 }
 
@@ -166,7 +180,11 @@ const deleteCompletedTask = (index) => {
         allTask.splice(index, 1);
         localStorage.setItem('completedTaskList', JSON.stringify(allTask));
     }
+    if (!JSON.parse(localStorage.getItem('completedTaskList')).length) {
+        closeCompleteModal();
+    }
     showCompletedTask();
+    checkCompletedTask();
 }
 
 // git remote add origin repoURl
