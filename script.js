@@ -29,12 +29,20 @@ const closeModal = () => {
     document.getElementById("modal").style.display = 'none';
 }
 
+const closeCompleteModal = () => {
+    document.getElementById("completeTaskModal").style.display = 'none';
+}
+
 const showModal = (type, index) => {
-    document.getElementById("modal").style.display = 'flex';
     if (type == 'edit') {
+        document.getElementById("modal").style.display = 'flex';
         document.getElementById('addTask').setAttribute('onclick', `saveEditedTask(${index})`)
         document.getElementById('addTask').innerText = 'Save Changes';
+    } else if (type == 'complete') {
+        document.getElementById('completeTaskModal').style.display = 'flex';
+        showCompletedTask();
     } else {
+        document.getElementById("modal").style.display = 'flex';
         document.getElementById('addTask').setAttribute('onclick', `addNewTask()`)
         document.getElementById('addTask').innerText = 'Add Task';
     }
@@ -44,7 +52,6 @@ function resetField() {
     document.forms[0].title.value = '';
     document.forms[0].description.value = '';
 }
-
 
 function showTask() {
     let html = '';
@@ -58,7 +65,7 @@ function showTask() {
             <a href="#"><i class="fa-solid fa-calendar-days"></i> ${element.date}</a>
             <a href="#" id="${index}" onclick="openEditModal(this.id)"><i class="fa-solid fa-pen"></i> Edit</a>
             <a href="#" id="${index}" onclick="deleteTask(this.id)"><i class="fa-solid fa-xmark"></i> Remove</a>
-            <a href="#"><i class="fa-solid fa-check"></i> Complete</a>
+            <a href="#" id="${index}" onclick="completeTask(this.id)"><i class="fa-solid fa-check"></i> Complete</a>
             </div>
             </div>`
         });
@@ -101,25 +108,67 @@ const changeSidePanel = (x) => {
         document.querySelectorAll('.side-panel-icon').forEach(e => { e.style.alignItems = 'flex-start'; e.style.paddingLeft = '12px'; });
         document.querySelectorAll('.icon-label').forEach(e => { e.style.display = 'inherit' });
         document.querySelector('.fa-angles-right').style.rotate = '180deg';
-        document.getElementById('expandBtn').setAttribute('onclick','changeSidePanel(false)')
-    }else{
+        document.getElementById('expandBtn').setAttribute('onclick', 'changeSidePanel(false)')
+    } else {
         document.querySelectorAll('.icon-label').forEach(e => { e.style.display = '' });
         document.querySelectorAll('.side-panel-icon').forEach(e => { e.style.alignItems = ''; e.style.paddingLeft = ''; });
         document.getElementById('mainLayout').style.gridTemplateColumns = '';
         document.querySelector('.fa-angles-right').style.rotate = '';
-        document.getElementById('expandBtn').setAttribute('onclick','changeSidePanel(true)')
-        
+        document.getElementById('expandBtn').setAttribute('onclick', 'changeSidePanel(true)')
+
     }
-    
+
 }
 
-const toggleSidePanel = ()=>{
-    if(window.innerWidth>1000){
+const toggleSidePanel = () => {
+    if (window.innerWidth > 1000) {
         changeSidePanel(true)
-    }else{
+    } else {
         changeSidePanel(false)
     }
 }
+
+const completeTask = (index) => {
+    let completedTaskList = JSON.parse(localStorage.getItem('completedTaskList'));
+    if (!localStorage.getItem('completedTaskList')) completedTaskList = [];
+    if (localStorage.getItem('taskList')) {
+        let allTask = JSON.parse(localStorage.getItem('taskList'));
+        completedTaskList.push(allTask.splice(index, 1)[0]);
+        localStorage.setItem('completedTaskList', JSON.stringify(completedTaskList));
+        localStorage.setItem('taskList', JSON.stringify(allTask));
+        showTask();
+    }
+}
+
+const showCompletedTask = () => {
+    let html = '';
+    let completedTaskList = JSON.parse(localStorage.getItem('completedTaskList'));
+    console.log(completedTaskList);
+    if (completedTaskList) {
+        completedTaskList.forEach((e, index) => {
+            html += `<div class="task-card">
+            <p class="task-heading">${e.title}</p>
+            <p class="task-body">${e.description}</p>
+            <div class="task-card-option">
+                <a href="#"><i class="fa-solid fa-calendar-days"></i> ${e.date}</a>
+                <a href="#" id="${index}" onclick=deleteCompletedTask(this.id)><i class="fa-solid fa-xmark"></i> Remove</a>
+            </div>
+        </div>`
+        })
+    }
+    document.getElementById('completedTaskListBox').innerHTML = html;
+}
+
+const deleteCompletedTask = (index) => {
+    let completedTaskList = JSON.parse(localStorage.getItem('completedTaskList'));
+    if (completedTaskList) {
+        let allTask = JSON.parse(localStorage.getItem('completedTaskList'));
+        allTask.splice(index, 1);
+        localStorage.setItem('completedTaskList', JSON.stringify(allTask));
+    }
+    showCompletedTask();
+}
+
 // git remote add origin repoURl
 // git branch -M main
 // git push -u origin main

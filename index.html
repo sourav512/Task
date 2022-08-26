@@ -12,7 +12,7 @@
     <script src="https://kit.fontawesome.com/8c59268d94.js" crossorigin="anonymous"></script>
 </head>
 
-<body onresize="toggleSidePanel()">
+<body onresize="toggleSidePanel()" onload="toggleSidePanel()">
     <!-- <div class="add-task-modal" id="modal"> -->
     <div class="modal-box" id="modal">
         <p class="modal-heading">Add Task </p>
@@ -28,6 +28,13 @@
             </div>
         </form>
     </div>
+    <div class="complete-task-modal-box" id="completeTaskModal">
+        <p class="modal-heading" >Completed Task</p>
+        <i class="fa-solid fa-circle-xmark modal-close-btn" id="modalCloseBtn" onclick="closeCompleteModal()"></i>
+        <div id="completedTaskListBox" class="completed-task">
+           
+        </div>
+    </div>
     <!-- </div> -->
     <div class="grid-container" id="mainLayout">
         <div class="navbar">
@@ -35,6 +42,7 @@
                 <p>Practice Application</p>
             </div>
             <div class="navbar-icon">
+                <div class="addTaskBtn" onclick="showModal('complete',0)"><i class="fa-solid fa-circle-check"></i> Completed</div>
                 <div class="addTaskBtn" onclick="showModal('new',0)"><i class="fa-solid fa-plus"></i> Task</div>
                 <div class="profile-image">A</div>
             </div>
@@ -69,6 +77,7 @@
             </div>
         </div>
         <div class="task" id="task">
+
             <!-- <div class="task-card">
                 <p class="task-heading">Prepare documentation</p>
                 <p class="task-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus sed nisi repellendus iusto natus odit? Voluptatem nulla ipsam doloribus. Et amet eum debitis ea mollitia consectetur eligendi reprehenderit quas nobis.</p>

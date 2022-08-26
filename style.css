@@ -251,6 +251,7 @@ body {
 
 .modal-heading {
     margin: 0 auto;
+    color: white;
     font-size: 36px;
 }
 
@@ -292,6 +293,34 @@ textarea {
     padding: 9px 12px;
     width: 33%;
 }
+
+.complete-task-modal-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(61, 61, 61);
+    width: 70%;
+    /* color: white; */
+    height: 75%;
+    margin: auto;
+    overflow: scroll;
+    display: none;
+    flex-direction: column;
+    border-radius: 12px;
+    z-index: 1;
+}
+.completed-task{
+    height: 100%;
+}
+
+/* .complete-task-card{
+    width: 100%;
+    background-color: aqua;
+    height: 120px;
+    margin-top: 4px;
+} */
+
 
 @media screen and (max-width:900px) {
     .task-card-option a {
